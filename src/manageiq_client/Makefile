@@ -10,8 +10,8 @@ PYDIRS	= profiles_api profiles_project
 EXAMPLEDIR = examples
 MANPAGES = 
 A2PS2S1C  = /bin/a2ps --sides=2 --medium=Letter --columns=1 --portrait --line-numbers=1 --font-size=8
-A2PSTMP   = ./tmp
-DOCS      = ./docs
+A2PSTMP   = ../../tmp
+DOCS      = ../../docs
 
 SHELL := /bin/bash
 
@@ -121,23 +121,18 @@ trad: coffee
 
 #Ref: https://stackoverflow.com/questions/1490949/how-to-write-loop-in-a-makefile
 # MANIFEST  
-SRC1= Makefile setup.py README.rst example.py setup.cfg 
-SRC2= tox.ini
-#SRC2= manage.py profiles_projects-dir-layout.txt
+SRC1= api.py filters.py  __init__.py  Makefile  utils.py
 
 cleantmp:
 	rm -f ${A2PSTMP}/*.ps ${A2PSTMP}/*.pdf	
 ps: cleantmp
 	$(foreach var, $(SRC1), ${A2PS2S1C} $(var) --output=${A2PSTMP}/$(var).ps ;)
-	$(foreach var, $(SRC2), ${A2PS2S1C} $(var) --output=${A2PSTMP}/$(var).ps ;)
 
 allpdf: pdf
-	make -C profiles_api pdf
-	make -C profiles_project pdf
+	make -C src/manageiq_client pdf
 
 pdf: ps
 	$(foreach var, $(SRC1), (cd ${A2PSTMP};ps2pdf $(var).ps $(var).pdf);)
-	$(foreach var, $(SRC2), (cd ${A2PSTMP};ps2pdf $(var).ps $(var).pdf);)
 	rm -f ${A2PSTMP}/*.ps
 	cp ${A2PSTMP}/*.pdf  ${DOCS}/
 

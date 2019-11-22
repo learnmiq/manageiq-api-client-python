@@ -132,8 +132,7 @@ ps: cleantmp
 	$(foreach var, $(SRC2), ${A2PS2S1C} $(var) --output=${A2PSTMP}/$(var).ps ;)
 
 allpdf: pdf
-	make -C profiles_api pdf
-	make -C profiles_project pdf
+	make -C src/manageiq_client pdf
 
 pdf: ps
 	$(foreach var, $(SRC1), (cd ${A2PSTMP};ps2pdf $(var).ps $(var).pdf);)
