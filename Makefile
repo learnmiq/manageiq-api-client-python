@@ -122,8 +122,8 @@ trad: coffee
 
 #Ref: https://stackoverflow.com/questions/1490949/how-to-write-loop-in-a-makefile
 # MANIFEST  
-SRC1= Makefile reqirements.txt README.md 
-SRC2= manage.py 
+SRC1= Makefile setup.py README.rst example.py setup.cfg 
+SRC2= tox.ini
 #SRC2= manage.py profiles_projects-dir-layout.txt
 
 cleantmp:
@@ -157,3 +157,10 @@ commit:
 	git commit -am "$(call args,Automated lazy commit message without details, read the code change)"  && git push
 
 
+venv:
+	source venv/bin/activate
+	pip install -e .   # To create an editable install of this package
+	pip install --upgrade pip
+# https://github.com/ManageIQ/manageiq-api-client-python
+#$ export MIQURL=http://localhost:3000/api
+#$ export MIQTOKEN=< place real token here >
